@@ -37,9 +37,13 @@ const ModalEditFood: React.FC<IModalProps> = ({
 }) => {
   const formRef = useRef<FormHandles>(null);
 
+  // função que será disparada após apertar o botão de concluir a edição
   const handleSubmit = useCallback(
     async (data: IEditFoodData) => {
-      // EDIT A FOOD PLATE AND CLOSE THE MODAL
+      // passando a food para a função do dashboard
+      handleUpdateFood(data);
+      // fechando o modal
+      setIsOpen();
     },
     [handleUpdateFood, setIsOpen],
   );

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FiEdit3, FiTrash } from 'react-icons/fi';
 
 import { Container } from './styles';
+import api from '../../services/api';
 
 interface IFoodPlate {
   id: number;
@@ -12,7 +13,6 @@ interface IFoodPlate {
   description: string;
   available: boolean;
 }
-
 interface IProps {
   food: IFoodPlate;
   handleDelete: (id: number) => {};
@@ -24,14 +24,22 @@ const Food: React.FC<IProps> = ({
   handleDelete,
   handleEditFood,
 }: IProps) => {
+  // variavel para disponibilidade
   const [isAvailable, setIsAvailable] = useState(food.available);
-
+  // função que muda a disponibilidade para disponivel ou indisponivel
   async function toggleAvailable(): Promise<void> {
-    // TODO UPDATE STATUS (available)
+    // utilizando o patch, pois é apenas uma mudança de um campo
+    // na rota foods, passando o ID da food
+    await api.patch(`/foods/${food.id}`, {
+      // passando todas as informações, e transformando o available no oposto do que era
+      ...food,
+      available: !isAvailable,
+    });
+    setIsAvailable(!isAvailable);
   }
-
+  // passando a função do dashboard que irá receber a food
   function setEditingFood(): void {
-    // TODO - SET THE ID OF THE CURRENT ITEM TO THE EDITING FOOD AND OPEN MODAL
+    handleEditFood(food);
   }
 
   return (

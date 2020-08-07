@@ -15,10 +15,11 @@ const Header: React.FC<IHeaderProps> = ({ openModal }) => (
       <img src={Logo} alt="GoRestaurant" />
       <nav>
         <div>
+          {/* Botão que faz o modal abrir */}
           <button
             type="button"
             onClick={() => {
-              /* TODO OPEN MODAL */
+              openModal();
             }}
           >
             <div className="text">Novo Prato</div>
